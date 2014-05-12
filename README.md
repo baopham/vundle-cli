@@ -1,6 +1,19 @@
 # Vundle CLI
 
-TODO: Write a gem description
+A (tiny) CLI for Vim plugin manager [Vundle](https://github.com/gmarik/Vundle.vim)  
+
+Available commands:
+
+* `rm` remove a bundle
+* `list` list all installed bundles
+* `find` find an installed bundle
+
+`rm` will remove the line `Bundle bundle_name` in your `.vimrc` and look 
+for a configuration file for this bundle in the specified settings directory, 
+then it will ask if you want to remove the file or not.
+
+I built this so that it's quicker to uninstall a bundle with my particular 
+[vim setup](https://github.com/baopham/vim)
 
 ## Installation
 
@@ -18,7 +31,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+  **NAME**:
+
+    vundle
+
+  **DESCRIPTION**:
+
+    A (tiny) CLI for Vim plugin manager Vundle
+
+  **COMMANDS**:
+	
+    find                 Search for an installed bundle  
+    help                 Display global or [command] help documentation  
+    list                 List all installed bundles  
+    rm                   Remove a bundle  
+
+  **GLOBAL OPTIONS**:
+	
+    -h, --help  
+        Display help documentation
+	
+    -v, --version  
+        Display version information
+	
+    -t, --trace  
+        Display backtrace when an error occurs
+	
 
 ## Contributing
 

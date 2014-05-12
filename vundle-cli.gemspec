@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Bao Pham"]
   spec.email         = ["gbaopham@gmail.com"]
   spec.summary       = %q{A tiny CLI for Vim plugin manager Vundle}
-  spec.description   = %q{Available commands: rm, list, find to remove, list and find installted bundles}
-  spec.homepage      = ""
+  spec.description   = %q{Available commands: rm, list, find to remove, list and find installed bundles}
+  spec.homepage      = "https://github.com/baopham/vundle-cli"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,5 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake", "~> 0.8"
-  spec.add_development_dependency "commander", "~> 4.2"
+  spec.add_dependency "commander", "~> 4.2"
 end

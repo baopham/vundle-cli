@@ -1,7 +1,7 @@
-require 'fileutils'
 require 'tempfile'
 
 module VundleCli
+
   class Uninstaller
 
     attr_reader :options
@@ -15,15 +15,16 @@ module VundleCli
     attr_reader :bundle
 
     def initialize(options, bundle)
-      # TODO: validate file input
       @options = options
-      @vimdir = File.expand_path(options.vimdir)
-      @settings_dir = File.expand_path(options.settings)
-      @vimrc = File.expand_path(options.vimrc)
-      @vimrc = File.readlink(@vimrc) if File.symlink?(@vimrc)
+      @vimdir = Helpers.file_validate(options.vimdir, true)
+      @settings_dir = Helpers.file_validate(options.settings, true)
+      @vimrc = Helpers.file_validate(options.vimrc)
       @bundle = bundle
     end
 
+    # 1) Remove the line `Bundle bundle` from .vimrc.
+    # 2) Look for a file in the settings directory (provided by option --settings)
+    #    with name that includes the bundle name. Then ask if the user wants to remove it.
     def rm
       tmp = Tempfile.new("vimrc_tmp")
       open(@vimrc, 'r').each { |l| 
@@ -37,8 +38,12 @@ module VundleCli
       FileUtils.mv(tmp.path, @vimrc)
 
       puts "Searching for setting file..."
+
+      # Get the bundle's main name.
+      # (the provided @bundle usually looks like baopham/trailertrash.vim,
+      # so we trim it down to get "trailertrash" only).
       bundle_name = @bundle
-      if @bundle.include? "/"
+      if @bundle.include?("/")
         bundle_name = @bundle.split("/")[1].sub(/\.vim/, '')
       end
 

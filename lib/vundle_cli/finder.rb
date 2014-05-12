@@ -7,11 +7,9 @@ module VundleCli
 
     attr_reader :bundle
 
-    def initialize(options, bundle='')
-      # TODO: validate file input
+    def initialize(options, bundle = '')
       @options = options
-      @vimrc = File.expand_path(options.vimrc)
-      @vimrc = File.readlink(@vimrc) if File.symlink?(@vimrc)
+      @vimrc = Helpers.file_validate(options.vimrc)
       @bundle = bundle
     end
 
@@ -30,7 +28,7 @@ module VundleCli
         matches = l.chomp.match(/^Bundle (\S*)/)
         if matches
           bundle = matches[1].gsub("'", '')
-          puts "Found #{bundle}" if bundle.include? @bundle
+          puts "Found #{bundle}" if bundle.include?(@bundle)
         end
       }
     end
