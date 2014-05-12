@@ -28,7 +28,7 @@ module VundleCli
         matches = l.chomp.match(/^Bundle (\S*)/)
         if matches
           bundle = matches[1].gsub("'", '')
-          puts "Found #{bundle}" if bundle.include?(@bundle)
+          puts "Found #{bundle}" if bundle.downcase.include?(@bundle.downcase)
         end
       }
     end

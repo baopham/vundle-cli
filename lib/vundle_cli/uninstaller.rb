@@ -49,7 +49,7 @@ module VundleCli
       end
 
       Dir.foreach(@settings_dir) do |fname|
-        next unless fname.include? bundle_name
+        next unless fname.downcase.include?(bundle_name.downcase)
         puts "Found #{@settings_dir}/#{fname} setting file. Remove it? (yes/no) "
         input = STDIN.gets.chomp
         if input == 'yes'
