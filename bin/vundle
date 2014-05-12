@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'commander/import'
+$:.unshift(File.expand_path('../../lib', __FILE__))
+require 'vundle_cli'
+
+program :version, VundleCli::VERSION
+program :description, 'A (tiny) CLI for Vim plugin manager Vundle'
+ 
+command :rm do |c|
+  c.syntax = 'vundle rm <bundle> [options]'
+  c.summary = ''
+  c.description = 'Uninstall a bundle. 
+This will remove the line `Bundle <bundle>` in your .vimrc 
+and will prompt you for confirmation before deleting the bundle\'s config file if found.'
+
+  c.example 'Remove bundle kien/ctrlp.vim', 'vundle rm kien/ctrlp.vim'
+
+  c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim'
+  c.option '--settings settings_dir', 
+    'Vim settings directory (where you configure your bundles). Default to ~/.vim/settings'
+  c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
+
+  c.action do |args, options|
+    bundle = args.shift || abort('Bundle argument required.')
+    options.default \
+      :vimdir => '~/.vim',
+      :settings => '~/.vim/settings',
+      :vimrc => '~/.vimrc'
+    runner = VundleCli::Uninstaller.new(options, bundle)
+    runner.rm
+  end
+end
+
+command :list do |c|
+  c.syntax = 'vundle list [options]'
+  c.summary = ''
+  c.description = 'List all installed bundles'
+  c.example '', 'vundle list --vimrc ~/.vimrc'
+  c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
+  c.action do |args, options|
+    options.default \
+      :vimrc => '~/.vimrc'
+    finder = VundleCli::Finder.new(options)
+    finder.list
+  end
+end
+
+command :find do |c|
+  c.syntax = 'vundle find bundle [options]'
+  c.summary = ''
+  c.description = 'Search for an installed bundle'
+  c.example 'Find a bundle that has substring `gist`', 'vundle find gist'
+  c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
+  c.action do |args, options|
+    bundle = args.shift || abort('Bundle argument required.')
+    options.default \
+      :vimrc => '~/.vimrc'
+    finder = VundleCli::Finder.new(options, bundle)
+    finder.find
+  end
+end
