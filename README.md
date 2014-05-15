@@ -10,7 +10,8 @@ Available commands:
 
 `rm` will remove the line `Bundle bundle_name` in your `.vimrc` and look 
 for a configuration file for this bundle in the specified settings directory, 
-then it will ask if you want to remove the file or not.
+then it will ask if you want to remove the file or not. There is also an option 
+to delete the installed bundle folder.
 
 I built this so that it's quicker to uninstall a bundle with my particular 
 [vim setup](https://github.com/baopham/vim)
