@@ -58,8 +58,9 @@ module VundleCli
         input = STDIN.gets.chomp
         if input == 'yes'
           File.delete("#{@settings_dir}/#{fname}")
-          puts "File deleted."
+          puts "===#{@settings_dir}/#{fname} deleted==="
         end
+        puts "\n"
       end
 
       puts "Searching for bundle folder..."
@@ -71,7 +72,7 @@ module VundleCli
           input = STDIN.gets.chomp
           if input == 'yes'
             FileUtils.rm_rf(bundle_dir)
-            puts "Bundle folder deleted."
+            puts "===#{bundle_dir} deleted==="
           end
         rescue Interrupt
           abort("Aborted.")
