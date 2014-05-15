@@ -19,7 +19,7 @@ and will prompt you for confirmation before deleting the bundle\'s config file i
   c.option '--settings settings_dir', 
     'Vim settings directory (where you configure your bundles). Default to ~/.vim/settings'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
-  c.option '-f', '--force', 'Delete the installed bundle folder. Disabled by default.'
+  c.option '-f', '--force', 'Force delete without confirmation. Disabled by default.'
   c.action do |args, options|
     bundle = args.shift || abort('Bundle argument required.')
     options.default \
