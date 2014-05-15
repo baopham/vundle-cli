@@ -44,13 +44,7 @@ module VundleCli
 
       puts "Searching for setting file..."
 
-      # Get the bundle's main name.
-      # (the provided @bundle usually looks like baopham/trailertrash.vim,
-      # so we trim it down to get "trailertrash.vim" only).
-      bundle_name = @bundle
-      if @bundle.include?("/")
-        bundle_name = @bundle.split("/")[1]
-      end
+      bundle_name = Helpers.bundle_base_name(@bundle)
 
       Dir.foreach(@settings_dir) do |fname|
         next unless fname.downcase.include?(bundle_name.sub(/\.vim/, '').downcase)
