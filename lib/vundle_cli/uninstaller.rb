@@ -67,10 +67,14 @@ module VundleCli
       bundle_dir = "#{@vimdir}/bundle/#{bundle_name}"
       if Dir.exists?(bundle_dir)
         puts "Found #{bundle_dir}. Remove it? (yes/no) "
-        input = STDIN.gets.chomp
-        if input == 'yes'
-          FileUtils.rm_rf(bundle_dir)
-          puts "Bundle folder deleted."
+        begin
+          input = STDIN.gets.chomp
+          if input == 'yes'
+            FileUtils.rm_rf(bundle_dir)
+            puts "Bundle folder deleted."
+          end
+        rescue Interrupt
+          abort("Aborted.")
         end
       end
 
