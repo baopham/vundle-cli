@@ -12,9 +12,11 @@ command :rm do |c|
   c.syntax = 'vundle rm <bundle> [options]'
   c.summary = 'Remove a bundle'
   c.description = 'Uninstall a bundle. 
-This will remove the line `Bundle <bundle>` in your .vimrc 
-and will prompt you for confirmation before deleting the bundle\'s config file if found.'
+The command will remove the line `Bundle bundle_name` in your `.vimrc`, 
+delete the configuration file for this bundle in the specified settings directory, and the bundle folder. 
+Before anything is deleted, the command will prompt you for confirmation unless the `--force` switch is on.'
   c.example 'Remove bundle kien/ctrlp.vim', 'vundle rm kien/ctrlp.vim'
+  c.example 'Or, remove any bundle that has `ctrlp` in its name (not recommended, bundle folders may not be deleted)', 'vundle rm ctrlp'
   c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim'
   c.option '--settings settings_dir', 
     'Vim settings directory (where you configure your bundles). Default to ~/.vim/settings'
