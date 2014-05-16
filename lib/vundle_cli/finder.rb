@@ -9,13 +9,20 @@ module VundleCli
       @bundle = bundle
     end
 
-    def list
+    def get_list
+      bundles = Array.new
       open(@vimrc, 'r').each { |l| 
         matches = l.chomp.match(/^Bundle (\S*)/)
         if matches
-          puts matches[1].gsub("'", '')
+          bundles << matches[1].gsub(/[',]/, '')
         end
       }
+      bundles
+    end
+
+    def list
+      bundles = get_list
+      bundles.each { |b| puts b }
     end
 
     def find
@@ -23,7 +30,7 @@ module VundleCli
       open(@vimrc, 'r').each { |l| 
         matches = l.chomp.match(/^Bundle (\S*)/)
         if matches
-          bundle = matches[1].gsub("'", '')
+          bundle = matches[1].gsub(/[',]/, '')
           puts "Found #{bundle}" if bundle.downcase.include?(@bundle.downcase)
         end
       }

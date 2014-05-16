@@ -7,6 +7,7 @@ Available commands:
 * `rm` remove a bundle
 * `list` list all installed bundles
 * `find` find an installed bundle
+* `clean` clean up unused bundle related files
 
 `rm` will remove the line `Bundle bundle_name` in your `.vimrc`, 
 delete the configuration file for this bundle in the specified settings directory, 
@@ -42,6 +43,7 @@ Or install it yourself as:
 
   **COMMANDS**:
 	
+    clean                Clean up unused bundle related files
     find                 Search for an installed bundle  
     help                 Display global or [command] help documentation  
     list                 List all installed bundles  

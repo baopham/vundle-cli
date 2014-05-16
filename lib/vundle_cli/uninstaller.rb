@@ -7,14 +7,16 @@ module VundleCli
 
     attr_reader :options, :vimdir, :settings_dir, :vimrc, :force, :bundle
 
-    def initialize(options, bundle)
+    def initialize(options, bundle = nil)
       @options = options
       @vimdir = Helpers.file_validate(options.vimdir, true)
       @settings_dir = Helpers.file_validate(options.settings, true)
       @vimrc = Helpers.file_validate(options.vimrc)
       @force = options.force
-      @bundle = bundle
-      abort("Bundle name too ambiguous.") if ambiguous?(bundle)
+      unless bundle.nil?
+        @bundle = bundle
+        abort("Bundle name too ambiguous.") if ambiguous?(bundle)
+      end
     end
 
     def ambiguous?(bundle)

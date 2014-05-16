@@ -63,3 +63,34 @@ command :find do |c|
     finder.find
   end
 end
+
+command :clean do |c|
+  c.syntax = 'vundle clean [bundle] [options]'
+  c.summary = 'Clean up unused bundle related files'
+  c.description = 'Clean up unused bundle related files (such as bundle folder and config file).
+It will prompt you for confirmation before deleting anything (unless force switch is on). 
+For option "--all", the command gets a list of the bundles in your bundle folder (e.g: ~/.vim/bundle) 
+and compare them with the bundles in your vimrc in order to determine which bundles need to be cleaned up.'
+  c.example 'Clean all unused bundles', 'vundle clean --all'
+  c.example 'Clean bundle vim-signify (the name has to be exact name of the plugin)', 'vundle clean vim-signify'
+  c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim'
+  c.option '--settings settings_dir', 
+    'Vim settings directory (where you configure your bundles). Default to ~/.vim/settings'
+  c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
+  c.option '-a', '--all', 'Delete everything that is not installed in your vimrc. Disabled by default.'
+  c.option '-f', '--force', 'Force delete files without prompt. Disabled by default.'
+  c.action do |args, options|
+    bundle = nil
+    unless options.all
+      bundle = args.shift || abort('Bundle argument required.')
+    end
+    options.default \
+      :vimdir => '~/.vim',
+      :settings => '~/.vim/settings',
+      :vimrc => '~/.vimrc',
+      :force => false
+    cleaner = VundleCli::Cleaner.new(options, bundle)
+    cleaner.clean
+    say "Done!"
+  end
+end
