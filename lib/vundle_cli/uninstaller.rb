@@ -19,7 +19,7 @@ module VundleCli
     # 1) Remove the line `Bundle bundle` from .vimrc.
     # 2) Look for a file in the settings directory (provided by option --settings)
     #    with name that includes the bundle name. Then ask if the user wants to remove it.
-    # 3) Remove the bundle directory if the force switch is on.
+    # 3) Remove the bundle directory.
     def rm(modify_vimrc = true)
 
       if modify_vimrc
