@@ -14,6 +14,12 @@ module VundleCli
       @vimrc = Helpers.file_validate(options.vimrc)
       @force = options.force
       @bundle = bundle
+      abort("Bundle name too ambiguous.") if ambiguous?(bundle)
+    end
+
+    def ambiguous?(bundle)
+      bundle_name = Helpers.bundle_base_name(bundle)
+      Helpers.bundle_trim_name(bundle_name).empty?
     end
 
     # 1) Remove the line `Bundle bundle` from .vimrc.
