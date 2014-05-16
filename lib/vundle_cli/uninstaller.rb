@@ -75,10 +75,19 @@ module VundleCli
 
     def delete_bundle_dir(bundle_name)
       bundle_dir = "#{@vimdir}/bundle/#{bundle_name}"
-      if Dir.exists?(bundle_dir)
+      dirs =
+        # If the user uses the exact name of the plugin, remove it.
+        if Dir.exists?(bundle_dir)
+          [bundle_dir]
+        # else, search for bundle folders with substring bundle_name.
+        else
+          Dir["#{@vimdir}/bundle/*#{bundle_name}*"]
+        end
+
+      dirs.each { |b|
         input = 'yes'
         unless @force
-          puts "Found #{bundle_dir}. Remove it? (yes/no) "
+          puts "Found #{b}. Remove it? (yes/no) "
           begin
             input = STDIN.gets.chomp
           rescue Interrupt
@@ -86,11 +95,11 @@ module VundleCli
           end
         end
         if input == 'yes'
-          FileUtils.rm_rf(bundle_dir)
-          puts "===#{bundle_dir} deleted==="
+          FileUtils.rm_rf(b)
+          puts "===#{b} deleted==="
         end
         Helpers.puts_separator
-      end
+      }
     end
   end
 end
