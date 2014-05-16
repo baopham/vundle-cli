@@ -52,9 +52,10 @@ module VundleCli
     end
 
     def delete_setting_file(bundle_name)
+      trimmed_name = Helpers.bundle_trim_name(bundle_name)
       Dir.foreach(@settings_dir) do |fname|
         next if fname == '.' or fname == '..'
-        next unless fname.downcase.include?(Helpers.bundle_trim_name(bundle_name).downcase)
+        next unless fname.downcase.include?(trimmed_name.downcase)
         input = 'yes'
         unless @force
           puts "Found #{@settings_dir}/#{fname} setting file. Remove it? (yes/no) "
