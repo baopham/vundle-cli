@@ -41,13 +41,8 @@ module VundleCli
       puts "Searching for setting file..."
       delete_setting_file(bundle_name)
 
-      Helpers.puts_separator
-
       puts "Searching for bundle folder..."
       delete_bundle_dir(bundle_name)
-
-      puts "Done!"
-
     end
 
     def delete_setting_file(bundle_name)
@@ -66,6 +61,7 @@ module VundleCli
           File.delete("#{@settings_dir}/#{fname}")
           puts "===#{@settings_dir}/#{fname} deleted==="
         end
+        Helpers.puts_separator
       end
     end
 
@@ -85,6 +81,7 @@ module VundleCli
           FileUtils.rm_rf(bundle_dir)
           puts "===#{bundle_dir} deleted==="
         end
+        Helpers.puts_separator
       end
     end
   end
