@@ -36,9 +36,9 @@ module VundleCli
     end
 
     # Get the trimed name of the bundle,
-    # e.g. remove prefix "vim-" and suffix ".vim".
+    # e.g. remove prefix, suffix "vim-", "-vim", ".vim".
     def bundle_trim_name(bundle_name)
-      bundle_name.gsub(/(\.vim|vim-)/, '') 
+      bundle_name.gsub(/(vim|-|\.)/, '')
     end
 
     def puts_separator
