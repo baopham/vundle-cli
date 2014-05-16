@@ -1,11 +1,7 @@
 module VundleCli
   class Finder
 
-    attr_reader :options
-
-    attr_reader :vimrc
-
-    attr_reader :bundle
+    attr_reader :options, :vimrc, :bundle
 
     def initialize(options, bundle = '')
       @options = options

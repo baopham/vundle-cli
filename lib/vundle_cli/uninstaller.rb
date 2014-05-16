@@ -5,17 +5,7 @@ module VundleCli
 
   class Uninstaller
 
-    attr_reader :options
-
-    attr_reader :vimdir
-
-    attr_reader :settings_dir
-
-    attr_reader :vimrc
-
-    attr_reader :force
-
-    attr_reader :bundle
+    attr_reader :options, :vimdir, :settings_dir, :vimrc, :force, :bundle
 
     def initialize(options, bundle)
       @options = options
