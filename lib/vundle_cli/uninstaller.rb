@@ -26,7 +26,7 @@ module VundleCli
         tmp = Tempfile.new("vimrc_tmp")
         open(@vimrc, 'r').each { |l| 
           if l.chomp =~ /Bundle .*#{Regexp.quote(@bundle)}.*/
-            puts "Found bundle #{@bundle}, removing it from #{@vimrc}..."
+            puts "Found #{l.chomp}, removing it from #{@vimrc}..."
             Helpers.puts_separator
           else
             tmp << l
