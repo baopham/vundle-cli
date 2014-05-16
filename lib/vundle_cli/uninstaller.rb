@@ -37,7 +37,7 @@ module VundleCli
         open(@vimrc, 'r').each { |l| 
           if l.chomp =~ /Bundle .*#{Regexp.quote(@bundle)}.*/
             puts "Found bundle #{@bundle}, removing it from #{@vimrc}..."
-	    Helpers.puts_separator
+            Helpers.puts_separator
           else
             tmp << l
           end
@@ -62,16 +62,16 @@ module VundleCli
 
     def delete_setting_file(bundle_name)
       Dir.foreach(@settings_dir) do |fname|
-	next unless fname.downcase.include?(Helpers.bundle_trim_name(bundle_name).downcase)
-	input = 'yes'
-	unless @force
-	  puts "Found #{@settings_dir}/#{fname} setting file. Remove it? (yes/no) "
-	  begin
-	    input = STDIN.gets.chomp
-	  rescue Interrupt
-	    abort("Aborted.")
-	  end
-	end
+        next unless fname.downcase.include?(Helpers.bundle_trim_name(bundle_name).downcase)
+        input = 'yes'
+        unless @force
+          puts "Found #{@settings_dir}/#{fname} setting file. Remove it? (yes/no) "
+          begin
+            input = STDIN.gets.chomp
+          rescue Interrupt
+            abort("Aborted.")
+          end
+        end
         if input == 'yes'
           File.delete("#{@settings_dir}/#{fname}")
           puts "===#{@settings_dir}/#{fname} deleted==="
@@ -82,19 +82,19 @@ module VundleCli
     def delete_bundle_dir(bundle_name)
       bundle_dir = "#{@vimdir}/bundle/#{bundle_name}"
       if Dir.exists?(bundle_dir)
-	input = 'yes'
-	unless @force
-	  puts "Found #{bundle_dir}. Remove it? (yes/no) "
-	  begin
-	    input = STDIN.gets.chomp
-	  rescue Interrupt
-	    abort("Aborted.")
-	  end
-	end
-	if input == 'yes'
-	  # FileUtils.rm_rf(bundle_dir)
-	  puts "===#{bundle_dir} deleted==="
-	end
+        input = 'yes'
+        unless @force
+          puts "Found #{bundle_dir}. Remove it? (yes/no) "
+          begin
+            input = STDIN.gets.chomp
+          rescue Interrupt
+            abort("Aborted.")
+          end
+        end
+        if input == 'yes'
+          FileUtils.rm_rf(bundle_dir)
+          puts "===#{bundle_dir} deleted==="
+        end
       end
     end
   end
