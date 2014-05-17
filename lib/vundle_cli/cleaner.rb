@@ -15,29 +15,23 @@ module VundleCli
     end
 
     def clean
+      if @all or @options.list
+        unused_plugins = get_list
+      end
+
+      if @options.list
+        puts "Unused plugins:"
+        puts unused_plugins.join("\n") unless unused_plugins.empty?
+        Helpers.puts_separator
+      end
       if @all
-        # Get a list of plugin directories (basenames only).
-        all_plugins = Array.new
-        all_plugins = Dir["#{@vimdir}/bundle/*/"].map { |b|
-          File.basename(b)
-        }
-
-        # Get a list of installed plugins.
-        finder = Finder.new(@options)
-        installed_plugins = Array.new
-        installed_plugins = finder.get_list.map { |b|
-          Helpers.plugin_base_name(b)
-        }
-
-        unused_plugins = all_plugins - installed_plugins
-
         uninstaller = Uninstaller.new(@options)
         unused_plugins.each do |plugin_name| 
           puts "Cleaning #{plugin_name}..."
           uninstaller.delete_setting_file(plugin_name)
           uninstaller.delete_plugin_dir(plugin_name)
         end
-      else
+      elsif not @plugin.nil?
         # Only clean up unused plugin.
         open(@vimrc, 'r').each { |l| 
           next unless l.chomp =~ /(Bundle|Plugin) .*#{Regexp.quote(@plugin)}.*/
@@ -48,6 +42,24 @@ module VundleCli
         uninstaller = Uninstaller.new(@options, @plugin)
         uninstaller.rm(false)
       end
+    end
+
+    # Get a list of unused plugins.
+    def get_list
+      # Get a list of plugin directories (basenames only).
+      all_plugins = Array.new
+      all_plugins = Dir["#{@vimdir}/bundle/*/"].map { |b|
+        File.basename(b)
+      }
+
+      # Get a list of installed plugins.
+      finder = Finder.new(@options)
+      installed_plugins = Array.new
+      installed_plugins = finder.get_list.map { |b|
+        Helpers.plugin_base_name(b)
+      }
+
+      all_plugins - installed_plugins
     end
 
   end

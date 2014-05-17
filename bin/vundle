@@ -78,11 +78,12 @@ and compare them with the plugins in your vimrc in order to determine which plug
     'Vim settings directory (where you configure your plugins). Default to ~/.vim/settings'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
   c.option '-a', '--all', 'Delete everything that is not installed in your vimrc. Disabled by default.'
+  c.option '-l', '--list', 'List all unused plugins.'
   c.option '-f', '--force', 'Force delete files without prompt. Disabled by default.'
   c.action do |args, options|
-    plugin = nil
-    unless options.all
-      plugin = args.shift || abort('Plugin argument required.')
+    plugin = args.shift
+    unless options.all or options.list
+      abort('Plugin argument required.') if plugin.nil?
     end
     options.default \
       :vimdir => '~/.vim',
