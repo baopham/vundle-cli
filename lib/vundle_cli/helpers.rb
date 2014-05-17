@@ -24,11 +24,8 @@ module VundleCli
       fpath
     end
 
-    # Get the bundle's main name.
-    # (the provided @bundle usually looks like baopham/trailertrash.vim,
-    # so we trim it down to get "trailertrash.vim" only).
     def bundle_base_name(bundle)
-      bundle.sub(/\S*\//, '')
+      File.basename(bundle)
     end
 
     # Get the trimmed name of the bundle,
