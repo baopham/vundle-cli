@@ -35,7 +35,7 @@ module VundleCli
     end
 
     def puts_separator
-      puts "-----------------------------"
+      say "-----------------------------"
     end
   end
 end

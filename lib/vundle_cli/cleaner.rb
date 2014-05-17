@@ -6,9 +6,9 @@ module VundleCli
 
     def initialize(options, plugin)
       @options = options
-      @vimdir = Helpers.file_validate(options.vimdir, true)
-      @settings_dir = Helpers.file_validate(options.settings, true)
-      @vimrc = Helpers.file_validate(options.vimrc)
+      @vimdir = file_validate(options.vimdir, true)
+      @settings_dir = file_validate(options.settings, true)
+      @vimrc = file_validate(options.vimrc)
       @all = options.all
       @force = options.force
       @plugin = plugin
@@ -20,14 +20,14 @@ module VundleCli
       end
 
       if @options.list
-        puts "Unused plugins:"
-        puts unused_plugins.join("\n") unless unused_plugins.empty?
-        Helpers.puts_separator
+        say "Unused plugins:"
+        say unused_plugins.join("\n") unless unused_plugins.empty?
+        puts_separator
       end
       if @all
         uninstaller = Uninstaller.new(@options)
         unused_plugins.each do |plugin_name| 
-          puts "Cleaning #{plugin_name}..."
+          say "Cleaning #{plugin_name}..."
           uninstaller.delete_setting_file(plugin_name)
           uninstaller.delete_plugin_dir(plugin_name)
         end
@@ -35,7 +35,7 @@ module VundleCli
         # Only clean up unused plugin.
         open(@vimrc, 'r').each { |l| 
           next unless l.chomp =~ /(Bundle|Plugin) .*#{Regexp.quote(@plugin)}.*/
-          puts "Can't clean this plugin since it's installed in your .vimrc. Please use command `rm` to uninstall it."
+          say_error "Can't clean this plugin since it's installed in your .vimrc. Please use command `rm` to uninstall it."
           return
         }
 
@@ -56,7 +56,7 @@ module VundleCli
       finder = Finder.new(@options)
       installed_plugins = Array.new
       installed_plugins = finder.get_list.map { |b|
-        Helpers.plugin_base_name(b)
+        plugin_base_name(b)
       }
 
       all_plugins - installed_plugins

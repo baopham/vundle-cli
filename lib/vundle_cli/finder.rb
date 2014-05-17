@@ -5,7 +5,7 @@ module VundleCli
 
     def initialize(options, plugin = '')
       @options = options
-      @vimrc = Helpers.file_validate(options.vimrc)
+      @vimrc = file_validate(options.vimrc)
       @plugin = plugin
     end
 
@@ -21,17 +21,20 @@ module VundleCli
     end
 
     def list
-      plugins = get_list
-      plugins.each { |b| puts b }
+      enable_paging
+      say get_list.join("\n")
     end
 
     def find
-      puts "Searching..."
+      say "Searching..."
       open(@vimrc, 'r').each { |l| 
         matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
           plugin = matches[2].gsub(/[',]/, '')
-          puts "Found #{plugin}" if plugin.downcase.include?(@plugin.downcase)
+          if plugin.downcase.include?(@plugin.downcase)
+            say_ok "Found "
+            say plugin
+          end
         end
       }
     end
