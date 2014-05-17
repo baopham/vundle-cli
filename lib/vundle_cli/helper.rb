@@ -1,5 +1,5 @@
 module VundleCli
-  module Helpers
+  module Helper
     module_function
 
     def file_validate(fpath, check_dir = false)
