@@ -24,7 +24,7 @@ module VundleCli
       Helpers.plugin_trim_name(plugin_name).empty?
     end
 
-    # 1) Remove the line `Bundle plugin` or `Plugin plugin` from .vimrc.
+    # 1) Remove the line `Bundle plugin_name` or `Plugin plugin_name` from .vimrc.
     # 2) Look for a file in the settings directory (provided by option --settings)
     #    with name that includes the plugin name. Then ask if the user wants to remove it.
     # 3) Remove the plugin directory.
