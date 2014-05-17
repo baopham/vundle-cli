@@ -50,7 +50,7 @@ command :list do |c|
 end
 
 command :find do |c|
-  c.syntax = 'vundle find plugin [options]'
+  c.syntax = 'vundle find <plugin> [options]'
   c.summary = 'Search for an installed plugin'
   c.description = 'Search for an installed plugin'
   c.example 'Find a plugin that has substring `gist`', 'vundle find gist'
