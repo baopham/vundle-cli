@@ -25,7 +25,7 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $ vundle
 
 Or install it yourself as:
 
