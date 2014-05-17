@@ -4,17 +4,17 @@ A (tiny) CLI for Vim plugin manager [Vundle](https://github.com/gmarik/Vundle.vi
 
 Available commands:
 
-* `rm` remove a bundle
-* `list` list all installed bundles
-* `find` find an installed bundle
-* `clean` clean up unused bundle related files
+* `rm` remove a plugin
+* `list` list all installed plugins
+* `find` find an installed plugin
+* `clean` clean up unused plugin related files
 
-`rm` will remove the line `Bundle bundle_name` in your `.vimrc`, 
-delete the configuration file for this bundle in the specified settings directory, 
-and the bundle folder. Before anything is deleted, the command will prompt you 
+`rm` will remove the line `Bundle plugin_name` or `Plugin plugin_name` in your `.vimrc`, 
+delete the configuration file for this plugin in the specified settings directory, 
+and the plugin folder. Before anything is deleted, the command will prompt you 
 for confirmation unless the `--force` switch is on.
 
-I built this so that it's quicker to uninstall a bundle with my particular 
+I built this so that it's quicker to uninstall a plugin with my particular 
 [vim setup](https://github.com/baopham/vim)
 
 ## Installation
@@ -43,11 +43,11 @@ Or install it yourself as:
 
   **COMMANDS**:
 	
-    clean                Clean up unused bundle related files
-    find                 Search for an installed bundle  
+    clean                Clean up unused plugin related files
+    find                 Search for an installed plugin  
     help                 Display global or [command] help documentation  
-    list                 List all installed bundles  
-    rm                   Remove a bundle  
+    list                 List all installed plugins  
+    rm                   Remove a plugin  
 
   **GLOBAL OPTIONS**:
 	

@@ -9,27 +9,27 @@ program :version, VundleCli::VERSION
 program :description, 'A (tiny) CLI for Vim plugin manager Vundle'
 
 command :rm do |c|
-  c.syntax = 'vundle rm <bundle> [options]'
-  c.summary = 'Remove a bundle'
-  c.description = 'Uninstall a bundle. 
-The command will remove the line `Bundle bundle_name` in your `.vimrc`, 
-delete the configuration file for this bundle in the specified settings directory, and the bundle folder. 
+  c.syntax = 'vundle rm <plugin> [options]'
+  c.summary = 'Remove a plugin'
+  c.description = 'Uninstall a plugin. 
+The command will remove the line `Bundle plugin_name` or `Plugin plugin_name` in your `.vimrc`, 
+delete the configuration file for this plugin in the specified settings directory, and the plugin folder. 
 Before anything is deleted, the command will prompt you for confirmation unless the `--force` switch is on.'
-  c.example 'Remove bundle kien/ctrlp.vim', 'vundle rm kien/ctrlp.vim'
-  c.example 'Or, remove any bundle that has `ctrlp` in its name (not recommended, it can be too ambiguous)', 'vundle rm ctrlp'
+  c.example 'Remove plugin kien/ctrlp.vim', 'vundle rm kien/ctrlp.vim'
+  c.example 'Or, remove any plugin that has `ctrlp` in its name (not recommended, it can be too ambiguous)', 'vundle rm ctrlp'
   c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim'
   c.option '--settings settings_dir', 
-    'Vim settings directory (where you configure your bundles). Default to ~/.vim/settings'
+    'Vim settings directory (where you configure your plugins). Default to ~/.vim/settings'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
   c.option '-f', '--force', 'Force delete without confirmation. Disabled by default.'
   c.action do |args, options|
-    bundle = args.shift || abort('Bundle argument required.')
+    plugin = args.shift || abort('Plugin argument required.')
     options.default \
       :vimdir => '~/.vim',
       :settings => '~/.vim/settings',
       :vimrc => '~/.vimrc',
       :force => false
-    runner = VundleCli::Uninstaller.new(options, bundle)
+    runner = VundleCli::Uninstaller.new(options, plugin)
     runner.rm
     say "Done!"
   end
@@ -37,8 +37,8 @@ end
 
 command :list do |c|
   c.syntax = 'vundle list [options]'
-  c.summary = 'List all installed bundles'
-  c.description = 'List all installed bundles'
+  c.summary = 'List all installed plugins'
+  c.description = 'List all installed plugins'
   c.example '', 'vundle list --vimrc ~/.vimrc'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
   c.action do |args, options|
@@ -50,46 +50,46 @@ command :list do |c|
 end
 
 command :find do |c|
-  c.syntax = 'vundle find bundle [options]'
-  c.summary = 'Search for an installed bundle'
-  c.description = 'Search for an installed bundle'
-  c.example 'Find a bundle that has substring `gist`', 'vundle find gist'
+  c.syntax = 'vundle find plugin [options]'
+  c.summary = 'Search for an installed plugin'
+  c.description = 'Search for an installed plugin'
+  c.example 'Find a plugin that has substring `gist`', 'vundle find gist'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
   c.action do |args, options|
-    bundle = args.shift || abort('Bundle argument required.')
+    plugin = args.shift || abort('Plugin argument required.')
     options.default \
       :vimrc => '~/.vimrc'
-    finder = VundleCli::Finder.new(options, bundle)
+    finder = VundleCli::Finder.new(options, plugin)
     finder.find
   end
 end
 
 command :clean do |c|
-  c.syntax = 'vundle clean [bundle] [options]'
-  c.summary = 'Clean up unused bundle related files'
-  c.description = 'Clean up unused bundle related files (such as bundle folder and config file).
+  c.syntax = 'vundle clean [plugin] [options]'
+  c.summary = 'Clean up unused plugin related files'
+  c.description = 'Clean up unused plugin related files (such as plugin folder and config file).
 It will prompt you for confirmation before deleting anything (unless force switch is on). 
-For option "--all", the command gets a list of the bundles in your bundle folder (e.g: ~/.vim/bundle) 
-and compare them with the bundles in your vimrc in order to determine which bundles need to be cleaned up.'
-  c.example 'Clean all unused bundles', 'vundle clean --all'
-  c.example 'Clean bundle vim-signify (the name has to be exact name of the plugin)', 'vundle clean vim-signify'
+For option "--all", the command gets a list of the plugins in your bundle folder (e.g: ~/.vim/bundle) 
+and compare them with the plugins in your vimrc in order to determine which plugins need to be cleaned up.'
+  c.example 'Clean all unused plugins', 'vundle clean --all'
+  c.example 'Clean plugin vim-signify (the name has to be exact name of the plugin)', 'vundle clean vim-signify'
   c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim'
   c.option '--settings settings_dir', 
-    'Vim settings directory (where you configure your bundles). Default to ~/.vim/settings'
+    'Vim settings directory (where you configure your plugins). Default to ~/.vim/settings'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc'
   c.option '-a', '--all', 'Delete everything that is not installed in your vimrc. Disabled by default.'
   c.option '-f', '--force', 'Force delete files without prompt. Disabled by default.'
   c.action do |args, options|
-    bundle = nil
+    plugin = nil
     unless options.all
-      bundle = args.shift || abort('Bundle argument required.')
+      plugin = args.shift || abort('Plugin argument required.')
     end
     options.default \
       :vimdir => '~/.vim',
       :settings => '~/.vim/settings',
       :vimrc => '~/.vimrc',
       :force => false
-    cleaner = VundleCli::Cleaner.new(options, bundle)
+    cleaner = VundleCli::Cleaner.new(options, plugin)
     cleaner.clean
     say "Done!"
   end

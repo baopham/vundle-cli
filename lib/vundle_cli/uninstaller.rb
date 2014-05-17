@@ -5,35 +5,35 @@ module VundleCli
 
   class Uninstaller
 
-    attr_reader :options, :vimdir, :settings_dir, :vimrc, :force, :bundle
+    attr_reader :options, :vimdir, :settings_dir, :vimrc, :force, :plugin
 
-    def initialize(options, bundle = nil)
+    def initialize(options, plugin = nil)
       @options = options
       @vimdir = Helpers.file_validate(options.vimdir, true)
       @settings_dir = Helpers.file_validate(options.settings, true)
       @vimrc = Helpers.file_validate(options.vimrc)
       @force = options.force
-      unless bundle.nil?
-        @bundle = bundle
-        abort("Bundle name too ambiguous.") if ambiguous?(bundle)
+      unless plugin.nil?
+        @plugin = plugin
+        abort("Plugin name too ambiguous.") if ambiguous?(plugin)
       end
     end
 
-    def ambiguous?(bundle)
-      bundle_name = Helpers.bundle_base_name(bundle)
-      Helpers.bundle_trim_name(bundle_name).empty?
+    def ambiguous?(plugin)
+      plugin_name = Helpers.plugin_base_name(plugin)
+      Helpers.plugin_trim_name(plugin_name).empty?
     end
 
-    # 1) Remove the line `Bundle bundle` from .vimrc.
+    # 1) Remove the line `Bundle plugin` or `Plugin plugin` from .vimrc.
     # 2) Look for a file in the settings directory (provided by option --settings)
-    #    with name that includes the bundle name. Then ask if the user wants to remove it.
-    # 3) Remove the bundle directory.
+    #    with name that includes the plugin name. Then ask if the user wants to remove it.
+    # 3) Remove the plugin directory.
     def rm(modify_vimrc = true)
 
       if modify_vimrc
         tmp = Tempfile.new("vimrc_tmp")
         open(@vimrc, 'r').each { |l| 
-          if l.chomp =~ /Bundle .*#{Regexp.quote(@bundle)}.*/
+          if l.chomp =~ /(Bundle|Plugin) .*#{Regexp.quote(@plugin)}.*/
             puts "Found #{l.chomp}, removing it from #{@vimrc}..."
             Helpers.puts_separator
           else
@@ -44,17 +44,17 @@ module VundleCli
         FileUtils.mv(tmp.path, @vimrc)
       end
 
-      bundle_name = Helpers.bundle_base_name(@bundle)
+      plugin_name = Helpers.plugin_base_name(@plugin)
 
       puts "Searching for setting file..."
-      delete_setting_file(bundle_name)
+      delete_setting_file(plugin_name)
 
-      puts "Searching for bundle folder..."
-      delete_bundle_dir(bundle_name)
+      puts "Searching for plugin folder..."
+      delete_plugin_dir(plugin_name)
     end
 
-    def delete_setting_file(bundle_name)
-      trimmed_name = Helpers.bundle_trim_name(bundle_name)
+    def delete_setting_file(plugin_name)
+      trimmed_name = Helpers.plugin_trim_name(plugin_name)
       Dir.foreach(@settings_dir) do |fname|
         next if fname == '.' or fname == '..'
         next unless fname.downcase.include?(trimmed_name.downcase)
@@ -75,15 +75,15 @@ module VundleCli
       end
     end
 
-    def delete_bundle_dir(bundle_name)
-      bundle_dir = "#{@vimdir}/bundle/#{bundle_name}"
+    def delete_plugin_dir(plugin_name)
+      plugin_dir = "#{@vimdir}/bundle/#{plugin_name}"
       dirs =
         # If the user uses the exact name of the plugin, remove it.
-        if Dir.exists?(bundle_dir)
-          [bundle_dir]
-        # else, search for bundle folders with substring bundle_name.
+        if Dir.exists?(plugin_dir)
+          [plugin_dir]
+        # else, search for plugin folders with substring plugin_name.
         else
-          Dir["#{@vimdir}/bundle/*#{bundle_name}*"]
+          Dir["#{@vimdir}/bundle/*#{plugin_name}*"]
         end
 
       dirs.each { |b|

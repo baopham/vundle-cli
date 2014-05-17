@@ -1,37 +1,37 @@
 module VundleCli
   class Finder
 
-    attr_reader :options, :vimrc, :bundle
+    attr_reader :options, :vimrc, :plugin
 
-    def initialize(options, bundle = '')
+    def initialize(options, plugin = '')
       @options = options
       @vimrc = Helpers.file_validate(options.vimrc)
-      @bundle = bundle
+      @plugin = plugin
     end
 
     def get_list
-      bundles = Array.new
+      plugins = Array.new
       open(@vimrc, 'r').each { |l| 
-        matches = l.chomp.match(/^Bundle (\S*)/)
+        matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
-          bundles << matches[1].gsub(/[',]/, '')
+          plugins << matches[2].gsub(/[',]/, '')
         end
       }
-      bundles
+      plugins
     end
 
     def list
-      bundles = get_list
-      bundles.each { |b| puts b }
+      plugins = get_list
+      plugins.each { |b| puts b }
     end
 
     def find
       puts "Searching..."
       open(@vimrc, 'r').each { |l| 
-        matches = l.chomp.match(/^Bundle (\S*)/)
+        matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
-          bundle = matches[1].gsub(/[',]/, '')
-          puts "Found #{bundle}" if bundle.downcase.include?(@bundle.downcase)
+          plugin = matches[2].gsub(/[',]/, '')
+          puts "Found #{plugin}" if plugin.downcase.include?(@plugin.downcase)
         end
       }
     end

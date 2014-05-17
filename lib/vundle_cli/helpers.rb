@@ -24,14 +24,14 @@ module VundleCli
       fpath
     end
 
-    def bundle_base_name(bundle)
-      File.basename(bundle)
+    def plugin_base_name(plugin)
+      File.basename(plugin)
     end
 
-    # Get the trimmed name of the bundle,
+    # Get the trimmed name of the plugin,
     # e.g. remove prefix, suffix "vim-", "-vim", ".vim".
-    def bundle_trim_name(bundle_name)
-      bundle_name.gsub(/(vim|-|\.)/, '')
+    def plugin_trim_name(plugin_name)
+      plugin_name.gsub(/(vim|-|\.)/, '')
     end
 
     def puts_separator

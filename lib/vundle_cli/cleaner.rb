@@ -2,50 +2,50 @@ module VundleCli
 
   class Cleaner
 
-    attr_reader :options, :vimdir, :settings_dir, :vimrc, :all, :force, :bundle
+    attr_reader :options, :vimdir, :settings_dir, :vimrc, :all, :force, :plugin
 
-    def initialize(options, bundle)
+    def initialize(options, plugin)
       @options = options
       @vimdir = Helpers.file_validate(options.vimdir, true)
       @settings_dir = Helpers.file_validate(options.settings, true)
       @vimrc = Helpers.file_validate(options.vimrc)
       @all = options.all
       @force = options.force
-      @bundle = bundle
+      @plugin = plugin
     end
 
     def clean
       if @all
-        # Get a list of bundle directories (basenames only).
-        all_bundles = Array.new
-        all_bundles = Dir["#{@vimdir}/bundle/*/"].map { |b|
+        # Get a list of plugin directories (basenames only).
+        all_plugins = Array.new
+        all_plugins = Dir["#{@vimdir}/bundle/*/"].map { |b|
           File.basename(b)
         }
 
-        # Get a list of installed bundles.
+        # Get a list of installed plugins.
         finder = Finder.new(@options)
-        installed_bundles = Array.new
-        installed_bundles = finder.get_list.map { |b|
-          Helpers.bundle_base_name(b)
+        installed_plugins = Array.new
+        installed_plugins = finder.get_list.map { |b|
+          Helpers.plugin_base_name(b)
         }
 
-        unused_bundles = bundle_dirs - installed_bundles
+        unused_plugins = all_plugins - installed_plugins
 
         puts "Cleaning..."
         uninstaller = Uninstaller.new(@options)
-        unused_bundles.each do |bundle_name| 
-          uninstaller.delete_setting_file(bundle_name)
-          uninstaller.delete_bundle_dir(bundle_name)
+        unused_plugins.each do |plugin_name| 
+          uninstaller.delete_setting_file(plugin_name)
+          uninstaller.delete_plugin_dir(plugin_name)
         end
       else
-        # Only clean up unused bundle.
+        # Only clean up unused plugin.
         open(@vimrc, 'r').each { |l| 
-          next unless l.chomp =~ /Bundle .*#{Regexp.quote(@bundle)}.*/
-          puts "Can't clean this bundle since it's installed in your .vimrc. Please use command `rm` to uninstall it."
+          next unless l.chomp =~ /(Bundle|Plugin) .*#{Regexp.quote(@plugin)}.*/
+          puts "Can't clean this plugin since it's installed in your .vimrc. Please use command `rm` to uninstall it."
           return
         }
 
-        uninstaller = Uninstaller.new(@options, @bundle)
+        uninstaller = Uninstaller.new(@options, @plugin)
         uninstaller.rm(false)
       end
     end
