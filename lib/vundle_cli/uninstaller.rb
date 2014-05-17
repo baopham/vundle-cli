@@ -31,24 +31,25 @@ module VundleCli
     def rm(modify_vimrc = true)
 
       if modify_vimrc
+        puts "Searching plugin in #{@vimrc}..."
         tmp = Tempfile.new("vimrc_tmp")
         open(@vimrc, 'r').each { |l| 
           if l.chomp =~ /(Bundle|Plugin) .*#{Regexp.quote(@plugin)}.*/
-            puts "Found #{l.chomp}, removing it from #{@vimrc}..."
-            Helpers.puts_separator
+            puts "Found #{l.chomp}, uninstalling it from vimrc..."
           else
             tmp << l
           end
         }
         tmp.close
         FileUtils.mv(tmp.path, @vimrc)
+        Helpers.puts_separator
       end
 
       plugin_name = Helpers.plugin_base_name(@plugin)
 
       puts "Searching for setting file..."
       delete_setting_file(plugin_name)
-
+      Helpers.puts_separator
       puts "Searching for plugin folder..."
       delete_plugin_dir(plugin_name)
     end
@@ -71,7 +72,6 @@ module VundleCli
           File.delete("#{@settings_dir}/#{fname}")
           puts "===#{@settings_dir}/#{fname} deleted==="
         end
-        Helpers.puts_separator
       end
     end
 
@@ -100,7 +100,6 @@ module VundleCli
           FileUtils.rm_rf(b)
           puts "===#{b} deleted==="
         end
-        Helpers.puts_separator
       }
     end
   end

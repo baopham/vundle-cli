@@ -31,9 +31,9 @@ module VundleCli
 
         unused_plugins = all_plugins - installed_plugins
 
-        puts "Cleaning..."
         uninstaller = Uninstaller.new(@options)
         unused_plugins.each do |plugin_name| 
+          puts "Cleaning #{plugin_name}..."
           uninstaller.delete_setting_file(plugin_name)
           uninstaller.delete_plugin_dir(plugin_name)
         end
