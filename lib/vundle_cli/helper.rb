@@ -37,5 +37,14 @@ module VundleCli
     def puts_separator
       say "-----------------------------"
     end
+
+    def agree?(message, color = nil)
+      begin
+        message = $terminal.color(message, color) unless color.nil?
+        agree(message)
+      rescue Interrupt
+        abort("\nAbort.")
+      end
+    end
   end
 end

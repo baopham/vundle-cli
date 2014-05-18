@@ -35,11 +35,17 @@ module VundleCli
         tmp = Tempfile.new("vimrc_tmp")
         open(@vimrc, 'r').each { |l| 
           if l.chomp =~ /(Bundle|Plugin) .*#{Regexp.quote(@plugin)}.*/
-            say_ok "Uninstalling "
-            say l.chomp
-          else
-            tmp << l
+            yes = true
+            unless @force
+              yes = agree? "Uninstall #{l.chomp} from vimrc? (y/n) ", :yellow
+            end
+            if yes
+              say_ok "Uninstalling "
+              say l.chomp.gsub(/(Bundle|Plugin|'|,|\s)/, '')
+              next
+            end
           end
+          tmp << l
         }
         tmp.close
         FileUtils.mv(tmp.path, @vimrc)
@@ -60,16 +66,11 @@ module VundleCli
       Dir.foreach(@settings_dir) do |fname|
         next if fname == '.' or fname == '..'
         next unless fname.downcase.include?(trimmed_name.downcase)
-        input = 'yes'
+        yes = true
         unless @force
-          say_warning "Found #{@settings_dir}/#{fname} setting file. Remove it? (yes/no) "
-          begin
-            input = STDIN.gets.chomp
-          rescue Interrupt
-            abort("Aborted.")
-          end
+          yes = agree? "Found #{@settings_dir}/#{fname}. Remove it? (y/n) ", :yellow
         end
-        if input == 'yes'
+        if yes
           File.delete("#{@settings_dir}/#{fname}")
           say_ok "===#{@settings_dir}/#{fname} deleted==="
         end
@@ -88,16 +89,11 @@ module VundleCli
         end
 
       dirs.each { |b|
-        input = 'yes'
+        yes = true
         unless @force
-          say_warning "Found #{b}. Remove it? (yes/no) "
-          begin
-            input = STDIN.gets.chomp
-          rescue Interrupt
-            abort("Aborted.")
-          end
+          yes = agree? "Found #{b}. Remove it? (y/n) ", :yellow
         end
-        if input == 'yes'
+        if yes
           FileUtils.rm_rf(b)
           say_ok "===#{b} deleted==="
         end
