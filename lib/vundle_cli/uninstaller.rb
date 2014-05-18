@@ -72,7 +72,7 @@ module VundleCli
         end
         if yes
           File.delete("#{@settings_dir}/#{fname}")
-          say_ok "===#{@settings_dir}/#{fname} deleted==="
+          say_ok "---#{@settings_dir}/#{fname} deleted---"
         end
       end
     end
@@ -95,7 +95,7 @@ module VundleCli
         end
         if yes
           FileUtils.rm_rf(b)
-          say_ok "===#{b} deleted==="
+          say_ok "---#{b} deleted---"
         end
       }
     end
