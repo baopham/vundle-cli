@@ -31,7 +31,7 @@ module VundleCli
     # Get the trimmed name of the plugin,
     # e.g. remove prefix, suffix "vim-", "-vim", ".vim".
     def plugin_trim_name(plugin_name)
-      plugin_name.gsub(/(vim|-|\.)/, '')
+      plugin_name.gsub(/(vim-|-vim|\.vim)/, '')
     end
 
     def puts_separator
