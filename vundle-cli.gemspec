@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Bao Pham"]
   spec.email         = ["gbaopham@gmail.com"]
   spec.summary       = %q{A tiny CLI for Vim plugin manager Vundle}
-  spec.description   = %q{Available commands: rm, list, find to remove, list and find installed bundles}
+  spec.description   = %q{Available commands: rm, list, find, clean to remove, list, find installed plugins and clean up unused plugins}
   spec.homepage      = "https://github.com/baopham/vundle-cli"
   spec.license       = "MIT"
 
