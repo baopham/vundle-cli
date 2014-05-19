@@ -11,12 +11,12 @@ program :description, 'A (tiny) CLI for Vim plugin manager Vundle'
 command :rm do |c|
   c.syntax = 'vundle rm <plugin> [options]'
   c.summary = 'Remove a plugin'
-  c.description = 'Uninstall a plugin. 
-The command will remove the line `Bundle plugin_name` or `Plugin plugin_name` in your `.vimrc`, 
+  c.description = "Uninstall a plugin. 
+The command will remove the line ``Bundle plugin_name'' or ``Plugin plugin_name'' in your ``.vimrc'', 
 delete the configuration file for this plugin in the specified settings directory, and the plugin folder. 
-Before anything is deleted, the command will prompt you for confirmation unless the `--force` switch is on.'
+Before anything is deleted, the command will prompt you for confirmation unless the ``--force'' switch is on."
   c.example 'Remove plugin kien/ctrlp.vim', 'vundle rm kien/ctrlp.vim'
-  c.example 'Or, remove any plugin that has `ctrlp` in its name (not recommended, it can be too ambiguous)', 'vundle rm ctrlp'
+  c.example "Or, remove any plugin that has ``ctrlp'' in its name (not recommended, it can be too ambiguous)", 'vundle rm ctrlp'
   c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim.'
   c.option '--settings settings_dir', 
     'Vim settings directory (where you configure your plugins). Default to ~/.vim/settings.'
@@ -53,7 +53,7 @@ command :find do |c|
   c.syntax = 'vundle find <plugin> [options]'
   c.summary = 'Search for an installed plugin'
   c.description = 'Search for an installed plugin'
-  c.example 'Find a plugin that has substring `gist`', 'vundle find gist'
+  c.example "Find a plugin that has substring ``gist''", 'vundle find gist'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc.'
   c.action do |args, options|
     plugin = args.shift || abort('Plugin argument required.')
@@ -67,13 +67,13 @@ end
 command :clean do |c|
   c.syntax = 'vundle clean [plugin] [options]'
   c.summary = 'Clean up unused plugin related files'
-  c.description = 'Clean up unused plugin related files (such as plugin folder and config file).
+  c.description = "Clean up unused plugin related files (such as plugin folder and config file).
 It will prompt you for confirmation before deleting anything (unless force switch is on). 
-For option "--all", the command gets a list of the plugins in your bundle folder (e.g: ~/.vim/bundle) 
-and compare them with the plugins in your vimrc in order to determine which plugins need to be cleaned up.'
+For option ``--all'', the command gets a list of the plugins in your bundle folder (e.g: ~/.vim/bundle) 
+and compare them with the plugins in your vimrc in order to determine which plugins need to be cleaned up."
   c.example 'Clean all unused plugins', 'vundle clean --all'
   c.example 'Clean plugin vim-signify', 'vundle clean vim-signify'
-  c.example 'Clean any plugins with names that have substring `dirty`', 'vundle clean dirty'
+  c.example "Clean any plugins with names that have substring ``dirty''", 'vundle clean dirty'
   c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim.'
   c.option '--settings settings_dir', 
     'Vim settings directory (where you configure your plugins). Default to ~/.vim/settings.'
