@@ -1,4 +1,4 @@
-# Vundle CLI
+# Vundle CLI [![Gem Version](https://badge.fury.io/rb/vundle-cli.svg)](http://badge.fury.io/rb/vundle-cli)
 
 A (tiny) CLI for Vim plugin manager [Vundle](https://github.com/gmarik/Vundle.vim)  
 
