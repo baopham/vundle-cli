@@ -17,6 +17,8 @@ for confirmation unless the `--force` switch is on.
 I built this so that it's quicker to uninstall a plugin with my particular 
 [vim setup](https://github.com/baopham/vim)
 
+![gif](http://baopham.github.io/images/vundlecli.gif)
+
 ## Installation
 
 Add this line to your application's Gemfile:
