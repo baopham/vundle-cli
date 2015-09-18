@@ -110,8 +110,11 @@ command :install do |c|
     options.default \
       :vimdir => '~/.vim',
       :vimrc => '~/.vimrc'
-    installer = VundleCli::Installer.new(options, plugin)
-    installer.install
+    finder = VundleCli::Finder.new(options, plugin)
+    unless finder.find
+      installer = VundleCli::Installer.new(options, plugin)
+      installer.install
+    end
     say_ok "Done!"
   end
 end

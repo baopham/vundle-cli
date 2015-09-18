@@ -27,6 +27,7 @@ module VundleCli
 
     def find
       say "Searching..."
+      found=false
       open(@vimrc, 'r').each { |l| 
         matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
@@ -34,9 +35,11 @@ module VundleCli
           if plugin.downcase.include?(@plugin.downcase)
             say_ok "Found "
             say plugin
+            found=true
           end
         end
       }
+      found
     end
 
   end
