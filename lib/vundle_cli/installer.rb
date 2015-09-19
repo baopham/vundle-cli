@@ -23,7 +23,7 @@ module VundleCli
         tmp = Tempfile.new("vimrc_tmp")
         open(@vimrc, 'r').each { |l| 
           if l.chomp =~ /vundle#begin/
-            l<<"\nPlugin '#{@plugin}'"
+            l << "\nPlugin '#{@plugin}'"
           end
           tmp << l
         }

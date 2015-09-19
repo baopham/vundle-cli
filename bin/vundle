@@ -100,8 +100,8 @@ end
 
 command :install do |c|
   c.syntax = 'vundle install <plugin> [options]'
-  c.summary = 'install a plugin and write to vimrc'
-  c.description = "do NOT add quote to plugin name"
+  c.summary = 'Install a plugin and write to vimrc'
+  c.description = "Do NOT add quote to plugin name"
   c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim.'
   c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc.'
   c.action do |args, options|

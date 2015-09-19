@@ -4,10 +4,11 @@ A (tiny) CLI for Vim plugin manager [Vundle](https://github.com/gmarik/Vundle.vi
 
 Available commands:
 
-* `rm` remove a plugin
-* `list` list all installed plugins
-* `find` find an installed plugin
-* `clean` clean up unused plugin related files
+* `rm`      remove a plugin
+* `list`    list all installed plugins
+* `find`    find an installed plugin
+* `clean`   clean up unused plugin related files
+* `install` install a plugin
 
 `rm` will remove the line `Bundle plugin_name` or `Plugin plugin_name` in your `.vimrc`, 
 delete the configuration file for this plugin in the specified settings directory, 
@@ -45,11 +46,12 @@ Or install it yourself as:
 
   **COMMANDS**:
 	
-    clean                Clean up unused plugin related files
-    find                 Search for an installed plugin  
-    help                 Display global or [command] help documentation  
-    list                 List all installed plugins  
-    rm                   Remove a plugin  
+    clean       Clean up unused plugin related files
+    find        Search for an installed plugin
+    help        Display global or [command] help documentation
+    install     Install a plugin and write to vimrc
+    list        List all installed plugins
+    rm          Remove a plugin
 
   **GLOBAL OPTIONS**:
 	
@@ -202,6 +204,27 @@ Or install it yourself as:
     -f, --force 
         Force delete files without prompt. Disabled by default.
 	
+
+- - -
+  **NAME**:
+
+    install
+
+  **SYNOPSIS**:
+
+    vundle install <plugin> [options]
+
+  **DESCRIPTION**:
+
+    Do NOT add quote to plugin name
+
+  **OPTIONS**:
+
+    --vimdir vimdir
+        Vim directory. Default to ~/.vim.
+
+    --vimrc vimrc
+        .vimrc path. Default to ~/.vimrc.
 
 ## Contributing
 

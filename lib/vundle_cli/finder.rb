@@ -11,7 +11,7 @@ module VundleCli
 
     def get_list
       plugins = Array.new
-      open(@vimrc, 'r').each { |l| 
+      open(@vimrc, 'r').each { |l|
         matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
           plugins << matches[2].gsub(/[',]/, '')
@@ -28,14 +28,14 @@ module VundleCli
     def find?
       say "Searching..."
       found = false
-      open(@vimrc, 'r').each { |l| 
+      open(@vimrc, 'r').each { |l|
         matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
           plugin = matches[2].gsub(/[',]/, '')
           if plugin.downcase.include?(@plugin.downcase)
             say_ok "Found "
             say plugin
-            found=true
+            found = true
           end
         end
       }
