@@ -60,7 +60,7 @@ command :find do |c|
     options.default \
       :vimrc => '~/.vimrc'
     finder = VundleCli::Finder.new(options, plugin)
-    finder.find
+    finder.find?
   end
 end
 
@@ -111,7 +111,7 @@ command :install do |c|
       :vimdir => '~/.vim',
       :vimrc => '~/.vimrc'
     finder = VundleCli::Finder.new(options, plugin)
-    unless finder.find
+    unless finder.find?
       installer = VundleCli::Installer.new(options, plugin)
       installer.install
     end

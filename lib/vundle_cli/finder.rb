@@ -25,9 +25,9 @@ module VundleCli
       say get_list.join("\n")
     end
 
-    def find
+    def find?
       say "Searching..."
-      found=false
+      found = false
       open(@vimrc, 'r').each { |l| 
         matches = l.chomp.match(/^(Bundle|Plugin) (\S*)/)
         if matches
