@@ -30,7 +30,7 @@ module VundleCli
         tmp.close
         FileUtils.mv(tmp.path, @vimrc)
         say "Waiting for plugin installing complete..."
-        `vim +PluginInstall +qall`
+        system "vim +PluginInstall +qall"
     end
   end
 end
