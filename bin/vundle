@@ -60,7 +60,7 @@ command :find do |c|
     options.default \
       :vimrc => '~/.vimrc'
     finder = VundleCli::Finder.new(options, plugin)
-    finder.find
+    finder.find?
   end
 end
 
@@ -93,6 +93,28 @@ and compare them with the plugins in your vimrc in order to determine which plug
       :force => false
     cleaner = VundleCli::Cleaner.new(options, plugin)
     cleaner.clean
+    say_ok "Done!"
+  end
+end
+
+
+command :install do |c|
+  c.syntax = 'vundle install <plugin> [options]'
+  c.summary = 'install a plugin and write to vimrc'
+  c.description = "do NOT add quote to plugin name"
+  c.option '--vimdir vimdir', 'Vim directory. Default to ~/.vim.'
+  c.option '--vimrc vimrc', '.vimrc path. Default to ~/.vimrc.'
+  c.action do |args, options|
+    plugin = args.shift
+    abort('Plugin argument required.') if plugin.nil?
+    options.default \
+      :vimdir => '~/.vim',
+      :vimrc => '~/.vimrc'
+    finder = VundleCli::Finder.new(options, plugin)
+    unless finder.find?
+      installer = VundleCli::Installer.new(options, plugin)
+      installer.install
+    end
     say_ok "Done!"
   end
 end
